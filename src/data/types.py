@@ -12,9 +12,17 @@ class Room:
     geometry: Polygon
 
     @classmethod
-    def from_tag(cls, tag: Tag):
-        """Constructs a new room from a bs4 tag"""
+    def from_tag(cls, tag: Tag, generic: bool):
+        """Constructs a new room from a bs4 tag
+
+        Args:
+            tag (Tag): The bs4 "space" tag to construct from. Should have the "Space" class.
+            generic (bool, optional): Whether to use generic/top-level categories. Set to false to include sub-categories. Defaults to False.
+        """
         name = tag["class"][len(SPACE_NAME_PREFIX):]
+        if generic:
+            name = name.split(" ")[0]
+
         id = tag["id"]
 
         points_str = tag.find("polygon")["points"].strip()

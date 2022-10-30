@@ -7,13 +7,14 @@ import networkx as nx
 
 def generate_graph(
     svg_path: Path,
+    generic_categories=False,
     buffer_pct=0.03,
 ):
     """Takes in a vectorized floor plan, and returns a room adjacency matrix"""
     bs = BeautifulSoup(svg_path.read_text(), "xml")
     bs_rooms = bs.select(".Space")
     gdf = gpd.GeoDataFrame([
-        Room.from_tag(tag) for tag in bs_rooms
+        Room.from_tag(tag, generic_categories) for tag in bs_rooms
     ]).set_index("id")
 
     minX, minY, maxX, maxY = gdf.total_bounds

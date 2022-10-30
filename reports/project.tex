@@ -39,6 +39,21 @@ Recent work in computer vision has explored using machine learning to digitize t
 
 \section{Introduction}
 
+Home builders and architects use floor plans everyday to coordinate construction efforts on complex projects. These documents detail exactly where every wall, window, and door is located, as well as the purpose of each room. Historically, they are shared through raster formats in printed documents or their modern PDF equivalent. While these formats are convenient for sharing, they are not easily machine-readable. In recent years, computer vision has been used to digitize these plans, turning them into a set of vectors describing the location of each wall, window, and door. This process is known as "raster-to-vector" conversion, and was first popularized for use with floor plans by \citet{rastertovec2017}. These digitized floor plans can then be used for a variety of downstream applications, such as higher fidelity collaboration, construction cost estimation, and 3D model generation.
+
+While raster-to-vector approaches have shown great success, they are not without their limitations. Most approaches rely on supplementary information such as text descriptions and icon detection to associate detected rooms with their purpose - information that isn't available on other types of floor plans. For example, LiDAR sensors in modern iPhones have been able to generate a 3D floor plan by detecting room dimensions and locations through RoomPlan, but don't embed any textual information about the room purpose \cite{appleroomplan}.
+
+Our approach echos that of \citet{floorgraphs2021}, which relied only on the spatial information of detected rooms to determine their purpose. Specifically, we encode the spatial information of each room in an adjacency graph, with nodes describing rooms and edges describing adjacent rooms. We examine the performance of a variety of graph neural networks (GNNs) on this task, as well as how different definitions of adjacency affect model performance. We differ from \citet{floorgraphs2021} in that we use a more detailed dataset in Cubicasa5k \cite{cubicasa5k}. This allows us to explore whether the models can generalize to more specific floor plans, ranging from 35 "top-level" room categories to 69 "sub-level" room categories. Our experiments show that a graphical approach to floor plan classification is competitive with original raster-to-vector approaches, and better generalizes to novel room categories.
+
+% \section{Methods}
+
+
+% \section{Results}
+
+
+% \section{Discussion}
+
+
 \bibliography{citations}
 
 \end{document}
