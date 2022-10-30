@@ -1,12 +1,24 @@
-\documentclass{article} % For LaTeX2e
-\usepackage{./styles/nips15submit_e}
-\usepackage{hyperref}
-\usepackage{url}
-\usepackage{cite}
+\documentclass{article}
 
-\title{Quarter 1 Project}
+% if you need to pass options to natbib, use, e.g.:
+\PassOptionsToPackage{numbers}{natbib}
+\bibliographystyle{plainnat}
+% before loading neurips_2020
 
+% ready for submission
+% use [final] or [preprint] for their associated versions
+\usepackage[preprint]{neurips_2020}
 
+\usepackage[utf8]{inputenc} % allow utf-8 input
+\usepackage[T1]{fontenc}    % use 8-bit T1 fonts
+\usepackage{hyperref}       % hyperlinks
+\usepackage{url}            % simple URL typesetting
+\usepackage{booktabs}       % professional-quality tables
+\usepackage{amsfonts}       % blackboard math symbols
+\usepackage{nicefrac}       % compact symbols for 1/2, etc.
+\usepackage{microtype}      % microtypography
+
+\title{Room Classification from Connected Floor Plan Graphs}
 \author{
 Nicholas DeGroot \\
 DSC 180A: Data Science Capstone \\
@@ -15,21 +27,18 @@ La Jolla, CA 92122 \\
 \texttt{ndegroot@ucsd.edu}
 }
 
-\nipsfinalcopy
-
 \begin{document}
 
 \maketitle
 
 \begin{abstract}
 
-    Abstract goes here
+Recent work in computer vision has explored using machine learning to digitize the floor plan: the architectural diagrams home builders use when constructing a new home. Most work has been focused in "raster-to-vector" approaches, which attempt to turn raster images of the floor plan into a set of vectors describing a wall, window, or other 2D object. While post-processing has shown some success in associating detected rooms with their purpose, these approaches largely rely on supplementary information such as text descriptions and icon detection. We explore whether the spatial information of detected rooms is sufficient to determine its purpose. In particular, we show that a graphical encoding of room adjacencies contains enough information alone to achieve results approaching those of recent work.
 
 \end{abstract}
 
 \section{Introduction}
 
-\bibliography{citations}{}
-\bibliographystyle{plain}
+\bibliography{citations}
 
 \end{document}
