@@ -2,27 +2,22 @@ from dataclasses import dataclass
 from shapely.geometry import Polygon
 from bs4 import Tag
 
-SPACE_NAME_PREFIX = "Space "
-
-
 @dataclass
 class Room:
-    name: str
+    __SPACE_NAME_PREFIX = "Space "
+
+    space: str
     id: str
     geometry: Polygon
 
     @classmethod
-    def from_tag(cls, tag: Tag, generic: bool):
+    def from_tag(cls, tag: Tag):
         """Constructs a new room from a bs4 tag
 
         Args:
             tag (Tag): The bs4 "space" tag to construct from. Should have the "Space" class.
-            generic (bool, optional): Whether to use generic/top-level categories. Set to false to include sub-categories. Defaults to False.
         """
-        name = tag["class"][len(SPACE_NAME_PREFIX):]
-        if generic:
-            name = name.split(" ")[0]
-
+        space = tag["class"][len(cls.__SPACE_NAME_PREFIX):]
         id = tag["id"]
 
         points_str = tag.find("polygon")["points"].strip()
@@ -31,4 +26,4 @@ class Room:
         ]
         poly = Polygon(points)
 
-        return cls(name=name, id=id, geometry=poly)
+        return cls(space=space, id=id, geometry=poly)
