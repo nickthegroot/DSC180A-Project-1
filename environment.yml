@@ -1,0 +1,28 @@
+name: roomgraph
+channels:
+  - conda-forge
+  - pytorch
+dependencies:
+  - black
+  - flake8
+  - isort
+  - pip
+  - setuptools
+  - wheel
+  - ipython
+  - jupyter
+  - pip:
+      - python-dotenv
+      - -e .
+  - beautifulsoup4=4.11.1
+  - geopandas=0.12.1
+  - lxml=4.9.1
+  - matplotlib=3.6.2
+  - networkx=2.8.8
+  - numpy=1.23.4
+  - pandas=1.5.1
+  - python=3.10
+  - pytorch-lightning=1.7.7
+  - pytorch=1.13.0
+  - shapely=1.8.5
+  - torchvision=0.14.0
