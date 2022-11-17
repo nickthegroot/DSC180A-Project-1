@@ -9,18 +9,13 @@ PROJECT_NAME = roomgraph
 PYTHON_VERSION = 3.10
 PYTHON_INTERPRETER = python
 
-
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
 
 
-## Install Python Dependencies
 requirements:
 	mamba env update --name $(PROJECT_NAME) --file environment.yml --prune
-	
-
-
 
 ## Delete all compiled Python files
 clean:

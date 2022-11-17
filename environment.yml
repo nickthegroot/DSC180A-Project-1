@@ -2,6 +2,7 @@ name: roomgraph
 channels:
   - conda-forge
   - pytorch
+  # - pyg
 dependencies:
   - black
   - flake8
@@ -13,7 +14,12 @@ dependencies:
   - jupyter
   - pip:
       - python-dotenv
-      - -e .
+      # Need to compile from source until M1 conda binaries are released :(
+      - git+https://github.com/rusty1s/pytorch_sparse@bc262e311f582c0591642490d6e71bc4ab636b7b
+      - torch-sparse
+      - torch-geometric
+      # - torch-cluster -f https://data.pyg.org/whl/torch-1.13.0+cpu.html
+      # - torch-spline-conv -f https://data.pyg.org/whl/torch-1.13.0+cpu.html
   - beautifulsoup4=4.11.1
   - geopandas=0.12.1
   - lxml=4.9.1
@@ -21,6 +27,7 @@ dependencies:
   - networkx=2.8.8
   - numpy=1.23.4
   - pandas=1.5.1
+  # - pyg=2.1.0
   - python=3.10
   - pytorch-lightning=1.7.7
   - pytorch=1.13.0
