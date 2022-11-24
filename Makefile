@@ -49,11 +49,15 @@ create_environment:
 #################################################################################
 
 ## Make Dataset
-data: requirements
+data:
 	mkdir data/raw
 	http -d -o data/raw/cubicasa5k.zip "https://zenodo.org/record/2613548/files/cubicasa5k.zip?download=1"
 	unzip data/raw/cubicasa5k.zip -d data/raw
 	rm -rf data/raw/cubicasa5k.zip
+
+test:
+	$(PYTHON_INTERPRETER) run.py test
+	
 
 #################################################################################
 # Self Documenting Commands                                                     #

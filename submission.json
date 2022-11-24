@@ -1,0 +1,4 @@
+{
+  "dockerhub-id": "ghcr.io/nickthegroot/dsc180a-project-1:latest",
+  "build-script": "python run.py"
+}

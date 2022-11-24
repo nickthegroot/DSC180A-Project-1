@@ -12,7 +12,6 @@ dependencies:
   - ipython
   - jupyter
   - pip:
-      - python-dotenv
       # Need to compile from source until M1 conda binaries are released :(
       - git+https://github.com/rusty1s/pytorch_sparse@bc262e311f582c0591642490d6e71bc4ab636b7b
       - torch-sparse
