@@ -1,2 +1,7 @@
 # Data should NOT be directly committed
 */
+!.gitignore
+
+# ...Except for manually created test data
+!test/
+!test/**
