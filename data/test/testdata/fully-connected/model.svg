@@ -10,9 +10,6 @@
                 <g id="bath_1" class="Space Bath">
                     <polygon points="100,100 200,100 200,200 100,200" />
                 </g>
-                <g id="outdoor_1" class="Space Outdoor">
-                    <polygon points="500,0 500,100 600,100 600,0" />
-                </g>
             </g>
         </g>
     </g>

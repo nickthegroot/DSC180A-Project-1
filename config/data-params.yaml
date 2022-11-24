@@ -1,2 +1,6 @@
-inDir: data/raw/cubicasa5k
-outDir: data/processed/
+root_dir: data/raw/cubicasa5k
+test_dir: data/test/testdata
+
+buffer_pct: .03
+batch_size: 8
+num_workers: 1

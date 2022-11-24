@@ -2,7 +2,6 @@ name: roomgraph
 channels:
   - conda-forge
   - pytorch
-  # - pyg
 dependencies:
   - black
   - flake8
@@ -27,9 +26,9 @@ dependencies:
   - networkx=2.8.8
   - numpy=1.23.4
   - pandas=1.5.1
-  # - pyg=2.1.0
   - python=3.10
   - pytorch-lightning=1.7.7
   - pytorch=1.13.0
+  - pyyaml=6.0
   - shapely=1.8.5
   - torchvision=0.14.0

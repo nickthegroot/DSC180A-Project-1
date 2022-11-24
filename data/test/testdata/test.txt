@@ -1,2 +1,3 @@
-/testdata/1
-/testdata/2
+/fully-connected
+/partially-connected
+/with-doors
