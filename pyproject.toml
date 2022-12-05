@@ -78,6 +78,9 @@ exclude = '''
 [tool.mypy]
 plugins = "pydantic.mypy"
 
+[tool.pytest.ini_options]
+addopts = ["--import-mode=importlib"]
+
 [build-system]
 requires = ["poetry>=0.12"]
 build-backend = "poetry.masonry.api"

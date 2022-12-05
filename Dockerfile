@@ -15,4 +15,4 @@ RUN poetry install --only main
 # add source code
 COPY ./roomgraph roomgraph
 
-ENTRYPOINT [ "poetry", "run" ]
+ENTRYPOINT [ "make" ]

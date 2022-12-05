@@ -11,11 +11,6 @@ SRC_DIR = roomgraph
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
-ifeq ($(OS),Windows_NT)
-VENV_BIN = .venv/Script
-else
-VENV_BIN = .venv/bin
-endif
 
 
 ## Set up python interpreter environment
@@ -29,6 +24,7 @@ install: create_environment
 	@echo ">>> Installing python dependencies"
 	poetry update --lock # ensures all dependencies are as up-to-date as possible
 	poetry install
+
 
 ## Run tensorboard
 tensorboard:
@@ -65,14 +61,6 @@ bandit:
 
 test:
 	poetry run pytest
-
-## Building docker repos
-docker:
-	docker-compose build
-
-## Pushing docker repos
-push: docker
-	docker-compose up
 
 #################################################################################
 # PROJECT RULES                                                                 #
