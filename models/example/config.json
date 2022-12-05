@@ -1,0 +1,7 @@
+{
+  "$schema": "../schema.json",
+  "model": "tagcn",
+  "num_layers": 2,
+  "num_workers": 12,
+  "max_epochs": 100
+}

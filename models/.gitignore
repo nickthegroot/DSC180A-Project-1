@@ -1,0 +1,5 @@
+*
+!.gitignore
+!schema.json
+!example/
+!example/config.json

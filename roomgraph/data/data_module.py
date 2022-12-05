@@ -1,20 +1,21 @@
-import pytorch_lightning as pl
-from torch.utils.data import DataLoader
 from pathlib import Path
+
+import pytorch_lightning as pl
+from torch_geometric.loader import DataLoader
+
 from .cubicasa5k import Cubicasa5k
+
 
 class CubicasaDataModule(pl.LightningDataModule):
     def __init__(
         self,
-        root_dir: Path,
-        buffer_pct: float = .03,
-        batch_size=1,
-        num_workers=0,
+        root_dir: str,
+        batch_size: int,
+        num_workers: int,
     ):
         super().__init__()
         self.batch_size = batch_size
         self.num_workers = num_workers
-        self.buffer_pct = buffer_pct
         self.train_paths = self._find_paths(root_dir, "train")
         self.val_paths = self._find_paths(root_dir, "val")
         self.test_paths = self._find_paths(root_dir, "test")
@@ -22,17 +23,16 @@ class CubicasaDataModule(pl.LightningDataModule):
     def setup(self, stage: str):
         match stage:
             case "fit":
-                self.train_dataset = Cubicasa5k(self.train_paths, self.buffer_pct)
-                self.val_dataset = Cubicasa5k(self.val_paths, self.buffer_pct)
+                self.train_dataset = Cubicasa5k(self.train_paths)
+                self.val_dataset = Cubicasa5k(self.val_paths)
             case "test":
-                self.test_dataset = Cubicasa5k(self.test_paths, self.buffer_pct)
+                self.test_dataset = Cubicasa5k(self.test_paths)
 
     def train_dataloader(self):
         return DataLoader(
             self.train_dataset,
             batch_size=self.batch_size,
             num_workers=self.num_workers,
-            collate_fn=self._collate,
             shuffle=True,
         )
 
@@ -41,7 +41,6 @@ class CubicasaDataModule(pl.LightningDataModule):
             self.val_dataset,
             batch_size=self.batch_size,
             num_workers=self.num_workers,
-            collate_fn=self._collate,
         )
 
     def test_dataloader(self):
@@ -49,16 +48,10 @@ class CubicasaDataModule(pl.LightningDataModule):
             self.test_dataset,
             batch_size=self.batch_size,
             num_workers=self.num_workers,
-            collate_fn=self._collate,
         )
 
-    def _find_paths(self, root_dir: Path, stage: str):
-        paths_txt = root_dir / f"{stage}.txt"
+    def _find_paths(self, root_dir: str, stage: str):
+        root = Path(root_dir)
+        paths_txt = root / f"{stage}.txt"
         paths = paths_txt.read_text().splitlines()
-        # Need to remove leading slash to make relative
-        paths = [root_dir / path[1:]  for path in paths]
-        return paths
-
-    def _collate(self, batch):
-        # Override default collate - return as list of torch_geometric Data objects
-        return batch
+        return [root / path for path in paths]

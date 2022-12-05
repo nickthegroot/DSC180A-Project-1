@@ -1,63 +1,84 @@
-.PHONY: clean data lint format requirements sync_data_down sync_data_up
+.PHONY: clean lint download install docker push format tensorboard data
 
 #################################################################################
 # GLOBALS                                                                       #
 #################################################################################
 
 PROJECT_DIR := $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST))))
-PROJECT_NAME = roomgraph
-PYTHON_VERSION = 3.10
-PYTHON_INTERPRETER = python
+PROJECT_NAME = room-graph
+SRC_DIR = roomgraph
 
 #################################################################################
 # COMMANDS                                                                      #
 #################################################################################
+ifeq ($(OS),Windows_NT)
+VENV_BIN = .venv/Script
+else
+VENV_BIN = .venv/bin
+endif
 
 
-requirements:
-	mamba env update --name $(PROJECT_NAME) --file environment.yml --prune
+## Set up python interpreter environment
+create_environment:
+	@echo ">>> Creating environment"
+	poetry config virtualenvs.create true
+	poetry config virtualenvs.in-project true
+
+## Install Python Dependencies
+install: create_environment
+	@echo ">>> Installing python dependencies"
+	poetry update --lock # ensures all dependencies are as up-to-date as possible
+	poetry install
+
+## Run tensorboard
+tensorboard:
+	@echo ">>> Running tensorboard"
+	poetry run tensorboard --logdir=models
+
+## Make Dataset
+data:
+	@echo ">>> Making dataset"
+	poetry run make_dataset
+
+download:
+	mkdir data/raw
+	wget "https://zenodo.org/record/2613548/files/cubicasa5k.zip?download=1"
+	unzip cubicasa5k.zip -d data/raw
+	rm -rf cubicasa5k.zip
 
 ## Delete all compiled Python files
 clean:
 	find . -type f -name "*.py[co]" -delete
 	find . -type d -name "__pycache__" -delete
 
-## Lint using flake8 and black (use `make format` to do formatting)
+## Lint using flake8
 lint:
-	flake8 roomgraph
-	black --check --config pyproject.toml roomgraph
+	flake8 $(SRC_DIR)
 
-
-## Format source code with black
+## Format using black
 format:
-	black --config pyproject.toml roomgraph
+	black $(SRC_DIR)
 
+## Run bandit security test
+bandit:
+	poetry run bandit -n 3 -r $(SRC_DIR)
 
+test:
+	poetry run pytest
 
+## Building docker repos
+docker:
+	docker-compose build
 
-## Set up python interpreter environment
-create_environment:
-	mamba env create --name $(PROJECT_NAME) python=$(PYTHON_VERSION) -f environment.yml
-	
-	@echo ">>> mamba env created. Activate with:\nmamba activate $(PROJECT_NAME)"
-	
-
-
+## Pushing docker repos
+push: docker
+	docker-compose up
 
 #################################################################################
 # PROJECT RULES                                                                 #
 #################################################################################
 
-## Make Dataset
-data:
-	mkdir data/raw
-	http -d -o data/raw/cubicasa5k.zip "https://zenodo.org/record/2613548/files/cubicasa5k.zip?download=1"
-	unzip data/raw/cubicasa5k.zip -d data/raw
-	rm -rf data/raw/cubicasa5k.zip
 
-test:
-	$(PYTHON_INTERPRETER) run.py test
-	
 
 #################################################################################
 # Self Documenting Commands                                                     #

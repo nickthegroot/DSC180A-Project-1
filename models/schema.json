@@ -1,0 +1,32 @@
+{
+  "title": "Config",
+  "description": "Configuration for one experiment / model training.",
+  "type": "object",
+  "properties": {
+    "data_dir": {
+      "title": "Data Dir",
+      "type": "string"
+    },
+    "num_workers": { "title": "Num Workers", "default": 1, "type": "integer" },
+    "max_epochs": { "title": "Max Epochs", "default": 100, "type": "integer" },
+    "batch_size": { "title": "Batch Size", "default": 128, "type": "integer" },
+    "model": { "$ref": "#/definitions/ModelType" },
+    "num_layers": { "title": "Num Layers", "type": "integer" },
+    "hidden_channels": {
+      "title": "Hidden Channels",
+      "default": 16,
+      "type": "integer"
+    },
+    "lr": { "title": "Lr", "default": 0.004, "type": "number" },
+    "gamma": { "title": "Gamma", "default": 0.8, "type": "number" }
+  },
+  "required": ["name", "model", "num_layers"],
+  "definitions": {
+    "ModelType": {
+      "title": "ModelType",
+      "description": "Enum for model type",
+      "enum": ["gat", "gcn", "graphsage", "mlp", "tagcn"],
+      "type": "string"
+    }
+  }
+}

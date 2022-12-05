@@ -1,14 +1,15 @@
 from dataclasses import dataclass, field
-from typing import List
-from shapely.geometry import Polygon
+
 from bs4 import Tag
+from shapely.geometry import Polygon
+
 from .util import tag_to_shape
-import re
+
 
 @dataclass
 class Room:
     __SPACE_NAME_PREFIX = "Space "
-    
+
     # Modified from https://github.com/CubiCasa/CubiCasa5k/blob/master/floortrans/loaders/house.py#L139
     ROOM_CATEGORY_MAP = {
         "Alcove": "Room",
@@ -27,17 +28,17 @@ class Room:
         "Counter": "Room",
         "Den": "Room",
         "Dining": "Dining",
-        "DraughtLobby": "Entry",
+        "DraughtLobby": "Corridor",
         "DressingRoom": "Storage",
         "EatingArea": "Dining",
         "Elevated": "Room",
         "Elevator": "Room",
-        "Entry": "Entry",
+        "Entry": "Corridor",
         "ExerciseRoom": "Room",
         "Garage": "Garage",
         "Garbage": "Room",
-        "Hall": "Room",
-        "HallWay": "Entry",
+        "Hall": "Corridor",
+        "HallWay": "Corridor",
         "HotTub": "Room",
         "Kitchen": "Kitchen",
         "Library": "Room",
@@ -72,46 +73,54 @@ class Room:
         "Undefined": "Room",
         "UserDefined": "Room",
         "Utility": "Room",
-        "Wall": "Wall",
-        "Railing": "Railing"
+        "Wall": "Corridor",
+        "Railing": "Corridor",
     }
 
     id: str
     geometry: Polygon
     space: str
-    
+
     category: str = field(init=False)
+
     @property
     def category(self):
-        tl_space = self.space.split(' ')[0]
+        tl_space = self.space.split(" ")[0]
         return self.ROOM_CATEGORY_MAP[tl_space]
+
     @category.setter
     def category(self, x):
         """Noop - readonly property"""
         pass
 
     width: float = field(init=False)
+
     @property
     def width(self):
         return self.geometry.bounds[2] - self.geometry.bounds[0]
+
     @width.setter
     def width(self, x):
         """Noop - readonly property"""
         pass
 
     height: float = field(init=False)
+
     @property
     def height(self):
         return self.geometry.bounds[3] - self.geometry.bounds[1]
+
     @width.setter
     def height(self, x):
         """Noop - readonly property"""
         pass
 
     area: float = field(init=False)
+
     @property
     def area(self):
         return self.geometry.area
+
     @area.setter
     def area(self, x):
         """Noop - readonly property"""
@@ -124,7 +133,7 @@ class Room:
         Args:
             tag (Tag): The bs4 "space" tag to construct from. Should have the "Space" class.
         """
-        space = tag["class"][len(cls.__SPACE_NAME_PREFIX):]
+        space = tag["class"][len(cls.__SPACE_NAME_PREFIX) :]
         id = tag["id"]
         poly = tag_to_shape(tag)
 
