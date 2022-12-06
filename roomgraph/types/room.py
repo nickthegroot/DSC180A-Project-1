@@ -110,7 +110,7 @@ class Room:
     def height(self):
         return self.geometry.bounds[3] - self.geometry.bounds[1]
 
-    @width.setter
+    @height.setter
     def height(self, x):
         """Noop - readonly property"""
         pass

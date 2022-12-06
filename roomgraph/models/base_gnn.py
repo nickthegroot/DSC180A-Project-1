@@ -53,6 +53,11 @@ class BaseGNNClassifier(pl.LightningModule):
         self.log("val_acc", acc, batch_size=x.num_graphs)
         return loss
 
+    def test_step(self, x: Batch, batch_idx: int):
+        y_hat = self(x)
+        acc = self.acc(y_hat, x.y)
+        self.log("test_acc", acc, batch_size=x.num_graphs)
+
     def configure_optimizers(self):
         optimizer = Adam(self.parameters(), lr=self.lr)
         scheduler = ExponentialLR(optimizer, gamma=self.gamma)

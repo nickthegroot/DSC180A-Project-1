@@ -4,7 +4,7 @@ from .base_gnn import BaseGNNClassifier
 
 
 class GATModel(BaseGNNClassifier):
-    """Graph Attention Network Model, based on the paper: https://arxiv.org/abs/1609.02907"""
+    """Graph Attention Network Model, based on the paper: https://arxiv.org/abs/1710.10903"""
 
     def __init__(
         self,

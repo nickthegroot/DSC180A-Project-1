@@ -35,3 +35,12 @@ def test_graph_gen_with_doors():
     # Make sure both rooms find the associated door
     assert graph.x[0, 3] == 1
     assert graph.x[1, 3] == 1
+
+
+def test_graph_gen_non_square():
+    model_path = Consts.TEST_DATA_DIR / "non-square"
+    graph = generate_graph(model_path, 0.03)
+
+    assert graph.x[0, 0] == 50 * 100
+    assert graph.x[0, 1] == 100
+    assert graph.x[0, 2] == 50
