@@ -10,22 +10,24 @@ make_dataset = "roomgraph.cli.make_dataset:run"
 
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.9"
 beautifulsoup4 = "^4.11.1"
 geopandas = "^0.12.1"
 lxml = "^4.9.1"
-pandas = "^1.5.2"
 pydantic = "^1.10.2"
-pyg-lib = "^0.1.0+pt113cu117"
-pytorch-lightning = "^1.8.3.post1"
+pygeos = "^0.13"
+
+# Included in Docker image, but still required for local development
+[tool.poetry.group.local.dependencies]
 torch = "^1.13.0"
+pytorch-lightning = "^1.8.3.post1"
+torchmetrics = "^0.11.0"
+pyg-lib = "^0.1.0+pt113cu117"
 torch-cluster = "^1.6.0+pt113cu117"
 torch-geometric = "^2.1.0.post1"
 torch-scatter = "^2.1.0+pt113cu117"
 torch-sparse = "^0.6.15+pt113cu117"
 torch-spline-conv = "^1.2.1+pt113cu117"
-pygeos = "^0.13"
-torchmetrics = "^0.11.0"
 
 [tool.poetry.group.dev.dependencies]
 bandit = "^1.7.4"
@@ -37,11 +39,12 @@ ipython = "^8.7.0"
 isort = "^5.10.1"
 jupyter = "^1.0.0"
 mypy = "^0.991"
+pandas = "^1.5.2"
 pytest = "^7.2.0"
 pytest-cov = "^4.0.0"
 pytest-xdist = "^3.0.2"
-tqdm = "^4.64.1"
 tensorboard = "^2.11.0"
+tqdm = "^4.64.1"
 
 [[tool.poetry.source]]
 name = "PyG"

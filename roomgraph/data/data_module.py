@@ -21,12 +21,11 @@ class CubicasaDataModule(pl.LightningDataModule):
         self.test_paths = self._find_paths(root_dir, "test")
 
     def setup(self, stage: str):
-        match stage:
-            case "fit":
-                self.train_dataset = Cubicasa5k(self.train_paths)
-                self.val_dataset = Cubicasa5k(self.val_paths)
-            case "test":
-                self.test_dataset = Cubicasa5k(self.test_paths)
+        if stage == "fit":
+            self.train_dataset = Cubicasa5k(self.train_paths)
+            self.val_dataset = Cubicasa5k(self.val_paths)
+        elif stage == "test":
+            self.test_dataset = Cubicasa5k(self.test_paths)
 
     def train_dataloader(self):
         return DataLoader(

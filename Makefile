@@ -1,4 +1,4 @@
-.PHONY: clean lint download install docker push format tensorboard data
+.PHONY: clean lint download install docker push format tensorboard data train
 
 #################################################################################
 # GLOBALS                                                                       #
@@ -25,22 +25,25 @@ install: create_environment
 	poetry update --lock # ensures all dependencies are as up-to-date as possible
 	poetry install
 
-
-## Run tensorboard
-tensorboard:
-	@echo ">>> Running tensorboard"
-	poetry run tensorboard --logdir=models
-
 ## Make Dataset
-data:
-	@echo ">>> Making dataset"
-	poetry run make_dataset
-
 download:
 	mkdir data/raw
 	wget "https://zenodo.org/record/2613548/files/cubicasa5k.zip?download=1"
 	unzip cubicasa5k.zip -d data/raw
 	rm -rf cubicasa5k.zip
+
+data: download
+	@echo ">>> Making dataset"
+	poetry run make_dataset
+
+## Training (Example Version)
+train: data
+	@echo ">>> Training"
+	poetry run train models/example
+
+tensorboard:
+	@echo ">>> Running tensorboard"
+	poetry run tensorboard --logdir=models
 
 ## Delete all compiled Python files
 clean:

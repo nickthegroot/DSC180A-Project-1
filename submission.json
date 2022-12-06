@@ -1,0 +1,4 @@
+{
+  "dockerhub-id": "ghcr.io/nickthegroot/room-graph:latest",
+  "build-script": "make"
+}
